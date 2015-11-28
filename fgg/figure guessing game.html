@@ -1,0 +1,117 @@
+<!doctype html>
+<head>
+	<meta charset="utf-8">
+	<title>figure-guessing game!</title>
+	<style type="text/css">
+		div{text-align: center;
+			border:6px outset pink;
+			background-color: lightskyblue;
+			margin:0 auto;
+			width:600px;
+			padding:9px;
+			height:312px;}
+		img{height: 100px;
+			border:3px groove greenyellow;
+			opacity: 0.4;}
+		ul{list-style-type: none;position: relative;left:160px;}
+		li{display: inline;}
+		span{width:60px;background-color: pink;padding:3px;float: left;color:white;font-size: border;}
+	</style>
+</head>
+<body>
+	<div>
+		<b>Computer</b><br/>
+		<img src="rock.jpg"><br/>
+		<b>Player</b><br/>
+		<img src="scissor.jpg" id="scissor" onmouseover="myover(this)" onmouseout="myout(this)" onclick="myclick(this)">
+		<img src="rock.jpg" id="rock" onmouseover="myover(this)" onmouseout="myout(this)" onclick="myclick(this)">
+		<img src="paper.jpg" id="paper" onmouseover="myover(this)" onmouseout="myout(this)" onclick="myclick(this)">
+		<ul>
+			<li><span>Win</span></li>
+			<li><span>Draw</span></li>
+			<li><span>Lose</span</li>
+		</ul>
+		<ul style="clear:left">
+			<li><span id="win">0</span></li>
+			<li><span id="wrap">0</span></li>
+			<li><span id="lose">0</span></li>
+		</ul>
+	</div>
+	<script type="text/javascript">	
+		var imgs=document.getElementsByTagName('img');
+		var x=imgs[0];
+		var i=0;
+		var win=0,lose=0;wrap=0;
+		function myover(obj){
+			obj.style.opacity="1.0";
+		}
+		function myout(obj){
+			obj.style.opacity="0.4";
+		}
+		function myclick(obj){
+			//console.log(obj.id.toString());
+			if(obj.id=="scissor")
+			switch(i%3){
+				case 0:
+				alert("平手!");
+				document.getElementById('wrap').innerHTML=++wrap;
+				break;
+				case 1:
+				alert("你输了!");
+				document.getElementById('lose'),innerHTML=++lose;
+				break;
+				case 2:
+				alert("你赢了!");
+				document.getElementById('win').innerHTML=++win;
+				break;
+			}
+			else if(obj.id=="rock")
+				switch(i%3){
+					case 0:
+					alert("你赢了!");
+					document.getElementById('win').innerHTML=++win;
+					break;
+					case 1:
+					alert("平手!");
+					document.getElementById("wrap").innerHTML=++wrap;
+					break;
+					case 2:
+					alert("你输了！");
+					document.getElementById('lose').innerHTML=++lose;
+					break;
+				}
+				else if(obj.id=="paper")
+					switch(i%3){
+						case 0:
+						alert("你输了!");
+						document.getElementById('lose').innerHTML=++lose;
+						break;
+						case 1:
+						alert("你赢了!");
+						document.getElementById('win').innerHTML=++win;
+						break;
+						case 2:
+						alert("平手!");
+						document.getElementById('wrap').innerHTML=++wrap;
+						break;
+					}
+		}
+		function myload(){
+			i=i+1;
+			m=i%3;
+			switch(m){
+				case 0:
+				x.src="scissor.jpg";
+				break;
+				case 1:
+				x.src="rock.jpg";
+				break;
+				case 2:
+				x.src="paper.jpg";
+				break;
+			}
+			t=setTimeout(function(){myload()},100);
+		}
+		myload();
+	</script>
+</body>

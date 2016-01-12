@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<canvas id="canvas" width="1000" height="1000" style="background:#000">您的浏览器不支持canvas标签</canvas>
+    <script>
+		//获取canvas元素
+		var canvas=document.getElementById('canvas');
+		//设置2d绘图环境
+		var cxt=canvas.getContext('2d');
+		//轨道
+		function drawTrack(){
+			for(var i=0;i<8;i++){
+				cxt.strokeStyle="#fff";
+				cxt.beginPath();
+				cxt.arc(500,500,(i+1)*50,0,Math.PI*2,false);
+				cxt.closePath();
+				cxt.stroke();
+			}
+		}
+		
+		drawTrack();
+		//星球
+		//星球对象的构造方法
+		function star(x,y,radius,cycle,sColor,eColor){
+			//星球的坐标点
+			this.x=x;
+			this.y=y;
+			//星球的半径
+			this.radius=radius;
+			//星球的周期
+			this.cycle=cycle;
+			//星球的颜色（开始色，结束色----实现渐变色）
+			this.sColor=sColor;
+			this.eColor=eColor;
+			//新建一个颜色空对象
+			this.color=null;
+			//设置一个计时器
+			this.time=0;
+			//画的方法
+			this.draw=function(){
+				cxt.save();
+				//重置0,0坐标点
+				cxt.translate(500,500);
+				//设置旋转角度
+				cxt.rotate((this.time)*(360/this.cycle)*Math.PI/180);
+				//画星球
+				cxt.beginPath();
+				cxt.arc(this.x,this.y,this.radius,0,360,false);
+				cxt.closePath();
+				//设置星球填充颜色
+				this.color=cxt.createRadialGradient(this.x,this.y,0,this.x,this.y,this.radius);
+				this.color.addColorStop(0,sColor);
+				this.color.addColorStop(1,eColor);
+				cxt.fillStyle=this.color;
+				cxt.fill();
+				cxt.restore();
+				//执行一次后加1
+				this.time+=1;
+			}
+		}
+		
+		function Sun(){
+			star.call(this,0,0,20,0,"#f00","#f90");
+		}
+		function Mercury(){
+			star.call(this,0,-50,10,87.7,"#A69697","#5C3E40");
+		}
+		function Venus(){
+			star.call(this,0,-100,10,224.7,"#C4BBAC","#1F1315")
+		}
+		function Earth(){
+			star.call(this,0,-150,10,365.2,"#78B1E8","#050C12")
+		}
+		var sun=new Sun();
+		var mercury=new Mercury();
+		var venus=new Venus();
+		var earth=new Earth();
+		
+		function move(){
+			cxt.clearRect(0,0,1000,1000);
+			drawTrack();
+			sun.draw();
+			mercury.draw();
+			venus.draw();
+			earth.draw();
+		}
+		setInterval(move,10);
+	</script>
+</body>
+</html>

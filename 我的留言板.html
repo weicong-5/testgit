@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>留言板</title>
+	<script src="http://www.imooc.com/data/jquery-1.8.2.min.js" type="text/javascript"></script>
+	<style type="text/css" media="screen">
+		*{margin:0;padding:0;}
+		#main{
+			border:5px solid #ccc;
+			width:400px;
+			height:470px;
+			margin:0 auto;
+			background: black;
+		}
+		#main .title{
+			display: block;
+			background:black;
+			color: white;
+			height:35px;
+			line-height: 35px;
+			text-align: center;
+		}
+		#contentList{
+			width:380px;
+			height:250px;
+			border:2px solid #ccc;
+			margin:5px auto;
+			overflow-y: scroll;
+			background-color: white;
+			font-family: "微软雅黑"
+		}
+		#divL{
+			float: left;
+			margin-left: 8px;
+		}
+		#divBot{
+			margin-top: 20px;
+		}
+		#divR{
+			float: left;
+			margin-left: 8px;
+		}
+		#divR #liuyan{
+			color:white;
+		}
+		#ipname{
+			margin-top: 5px;
+			width:75px;
+			font-family: "微软雅黑"
+		}
+		.btn{
+			width:150px;
+			height:62px;
+			font-size: 22px;
+		}
+		#divR #namespan,#divL #contentspan{
+			color:red;
+			font-size: 16px;
+		}
+		.who{
+			color:blue;
+		}
+		.say{
+			color:purple;
+		}
+		#divMsg{
+			color:red;
+			font-size: 12px;
+			/*display: none;*/
+		}
+	</style>
+</head>
+<body>
+	<div id="main">
+		<span class="title"><h3>weiCong留言板</h3></span>
+		<div id="contentList"></div>
+		<div id="divBot">
+			<div id="divL">
+				<textarea rows="8" cols="30"></textarea><br/>
+				<span id="contentspan"></span>
+			</div>
+			<div id="divR">
+				<span id="liuyan">留言者：</span><br/>
+				<input type="text" id="ipname" ><br/>
+				<span id="namespan"></span><br/>
+				<input id="button1" class="btn" type="button" value="留言">
+			</div>
+		</div><br/>
+		<center><span id="divMsg"></span></center>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$("#button1").click(function(){
+				var $name=$("#ipname").val();
+				var $content=$("textarea").val();
+				if($name=="" && $content!=""){
+					$("#namespan").html("名字不能为空!");
+					$("#ipname").focus();
+					$("#contentspan").html("");
+					return false;
+				}
+				if($content=="" && $name!=""){
+					$("#contentspan").html("内容不能为空!");
+					$("textarea").focus();
+					$("#namespan").html("");
+					return false;
+				}
+				if($name=="" && $content==""){
+					$("#contentspan").html("内容或名字不能为空!");
+					return false;
+				}else{
+					var $message=$("#contentList").html()+getTime()+"<span class='who'>"+$name+"</span>"+" 说: "+"<span class='say'>"+$content+"</span><br/>";
+					$.ajax({
+						url:"",
+						// type:"GET",
+						data:$message,
+						success:function(data){
+							$("#contentList").html($message);
+							$("textarea").val("");
+							$("#ipname").val("");
+							$("#contentspan").html("");
+							$("#namespan").html("");
+						}
+					});
+				}
+
+				$("#divMsg").ajaxStart(function() {
+					$(this).html("正在发送中...");
+				});
+
+				$("#divMsg").ajaxStop(function(){
+					$(this).html("发送完毕!");
+				});
+
+				//定时器
+				setTimeout(function(){
+					$("#divMsg").html("");
+				},1000);
+			});
+
+
+			function getTime(){
+				var now=new Date();
+				var year=now.getFullYear();
+				var month=now.getMonth()+1;
+				var day=now.getDate();
+				var hour=now.getHours();
+				var min=now.getMinutes();
+				var sec=now.getSeconds();
+				var time=year+"/"+month+"/"+day+" "+hour+":"+min+":"+sec;
+				return time;
+			}	
+		})
+	</script>
+</body>
+</html>

@@ -15,7 +15,7 @@ window.onload=function(){
 				oPic.className='pic';
 				obox.appendChild(oPic);
 				var oimg=document.createElement('img');
-				oimg.src="images/add/"+dataInt.data[i].src;
+				oimg.src="waterflow/images/add/"+dataInt.data[i].src;
 				oPic.appendChild(oimg);
 			}
 			waterflow('main','box');

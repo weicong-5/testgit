@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>搜索框制作</title>
+	<style type="text/css">
+		body{
+			background-color: rgb(51,51,51);
+		}
+		.main{
+			background-image: url("images/river.jpg");
+			width: 1228px;
+			height:690px;
+			margin:0 auto;
+			position: relative;
+		}
+		.logo{
+			width: 107px;
+			height:53px;
+			background-image: url("images/logo.png");
+			float:left;
+			margin:-4px 18px 0 0;/*使其与文本框垂直对齐 还有设置于form表单的外边距*/
+		}
+		form{
+			background-color: white;
+			float:left;
+			padding: 5px;
+		}
+		.searchinput{
+			height:25px;
+			line-height: 25px;
+			outline: none;
+			border:none;
+			float: left;
+			width: 350px;
+		}
+		.searchbutton{
+			width:29px;
+			height:29px;
+			background-image: url("images/search-button.png");
+			border:none;
+			float: left;
+		}
+		.box{
+			position: absolute;
+			top:145px;
+			left:190px;
+		}
+		#suggest{
+			background:#fff;
+			border:1px solid #999;
+		}
+		#suggest ul{
+			list-style: none;
+			margin: 0;
+			padding:0;
+			width: 390px;
+		}
+		#suggest ul li{
+			height: 37px;
+			line-height: 37px;
+			padding: 3px;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		#suggest ul li:hover{
+			background-color: #ccc;
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="box">
+			<div class="logo">
+			</div>
+			<form id="searchform" action="" method="get">
+				<input id="searchinput" class="searchinput" type="text" name="search">
+				<input class="searchbutton" type="submit" value="">
+			</form>
+		</div>
+	</div>
+	<div id="suggest" style="display: none">
+		<ul>
+			<li>搜索结果1</li>
+			<li>搜索结果2</li>
+		</ul>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script>
+		$("#searchinput").bind('keyup', function() {
+			var searchTxt=$('#searchinput').val();
+			$.get('http://api.bing.com/qsonhs.aspx?q='+searchTxt,function(d){
+				var d=d.AS.Results[0].Suggests;
+				var html="";
+				for(var i=0;i<d.length;i++){
+					html+="<li>"+d[i].Txt+"</li>";
+				}
+				$('#suggest').html(html);
+				$('#suggest').show().css({
+					'position':'absolute',
+					'top':$('#searchform').offset().top+$('#searchform').height()+10,
+					'left':$('#searchform').offset().left,
+				});
+			},'json');
+		});
+	</script>
+</body>
+</html>

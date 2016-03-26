@@ -1,0 +1,165 @@
+*{margin:0;padding:0;}
+body{background-color: #aaa;}
+.example{
+	width: 400px;
+	margin:50px auto;
+}
+.player{
+	background:url("../images/spr.png") no-repeat scroll center top;
+	width: 326px;
+	height: 162px;
+	position: relative;
+	z-index: 2;
+}
+.title,.artist{
+	position: absolute;
+	left:167px;
+	font-family: verdana;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+}
+.title{
+	color:#fff;
+	font-size: 14px;
+	font-weight: bold;
+	top:23px;
+}
+.artist{
+	color:#eee;
+	font-size: 12px;
+	top:40px;
+}/*它们都在上面的并写属性中有了绝对定位 所以可以分别进行top值定位*/
+/*pl是右边的点击展现列表按钮*/
+.pl{
+	background: transparent url("../images/spr.png") no-repeat scroll -274px -175px;/*注意图片的定位使用的-负值来定位*/
+	cursor: pointer;
+	height: 34px;
+	width: 32px;
+	position: absolute;
+	left:270px;
+	top:20px;
+}
+.p1{
+	top:21px;
+}
+/*cover是定义当前播放歌曲专辑的封面*/
+.cover{
+	background:transparent;
+	background-size: 100% 100%;
+	border-radius: 5px 5px 5px 5px ;
+	width: 94px;
+	height: 94px;/*这里定义了块区域的大小 然后用background-size:100% 100% 让载入的图片大小等比例跟设置的同等大小*/
+	position: absolute;
+	top:20px;
+	left:20px;
+}
+/*控制面板*/
+.controls{
+	position: absolute;
+	top:65px;
+	left:167px;
+	width: 138px;
+	height: 23px;
+	cursor: pointer;
+}
+.controls .play,.controls .pause,.controls .rew,.controls .fwd{
+	background: transparent url("../images/spr.png") no-repeat scroll 0 0;
+	float: left;
+	height: 100%;/*继承父元素的高度 也即是23px*/
+	width: 33%;/*分成3等分*/
+}
+/*上面定义了controls中的元素的背景图都是同一张 下面分别对他们进行定位*/
+.controls .play{
+	background-position: -8px -171px;
+}
+.controls .pause {
+    background-position: -8px -198px;
+    display: none;/*暂停按钮 一开始先设置为隐藏*/
+}
+.controls .rew {
+    background-position: -54px -171px;
+}
+.controls .fwd {
+    background-position: -100px -171px;
+}
+/*设置鼠标悬浮到按钮上 定位发生细微升高*/
+.controls .play:hover {
+    background-position: -8px -170px;
+}
+.controls .pause:hover {
+    background-position: -8px -197px;
+}
+.controls .rew:hover {
+    background-position: -54px -170px;
+}
+.controls .fwd:hover {
+    background-position: -100px -170px;
+}
+/*类名为hidden即隐藏*/
+.hidden{
+	display: none;
+}
+/*控制面板下 类名为visible即显示*/
+.controls .visible{
+	display: block;
+}
+/*音量条*/
+.volume{
+	height: 11px;
+	width: 112px;
+	position: absolute;
+	top:96px;
+	left: 186px;
+}
+/*进度条*/
+.tracker{
+	height: 15px;
+	width: 285px;
+	position: absolute;
+	left: 20px;
+	top: 126px;
+}
+/*歌曲列表*/
+.playlist{
+	background-color: #333;
+	border-radius: 5px;
+	list-style: none;
+	position: absolute;
+	margin:-10px 0 0 2px;
+	width: 322px;
+	padding-top:15px;
+	padding-bottom:10px;
+}
+.playlist li{
+	line-height: 1.5;
+	margin:0 0 5px 15px;
+	font-family: Arial;
+	font-size: 14px;
+	color:#eee;
+	cursor: pointer;
+}
+.playlist li:active{
+	font-weight: bold;
+}
+/*ui 定义进度条的背景图*/
+.ui-slider-range{/*定义进度条 它的高度根据父元素的高度*/
+	background:transparent url("../images/spr.png") no-repeat scroll 5px -222px;
+	height: 100%;
+	position: absolute;
+	top:0;
+}
+.ui-slider-handle{/*进度条末端的点*/
+	cursor: pointer;
+	height: 10px;
+	margin-left: -5px;
+	position: absolute;
+	top:2px;
+	width: 10px;
+	z-index: 2;
+}
+.volume .ui-slider-handle{/*定义音量进度条上的小圆点*/
+	background: url("../images/spr.png") no-repeat scroll -201px -188px rgba(0,0,0,0);
+	height: 13px;
+	width: 13px;
+}
